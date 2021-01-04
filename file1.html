@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+</head>
+<body>
+    
+    <div id="app">
+        <p>Name is <span >{{name}}</span></p>
+        <p>Title is <span v-html='title'></span></p>
+        <!-- <img v-bind:src='url' v-bind:title='img_title'> -->
+
+        <ul>
+            <li v-for=' item in items'>{{item}}</li>
+        </ul>
+
+        <div>
+            <li v-for='student in students'>{{student.name+" "+student.age}}</li>
+        </div>
+
+        <p v-if='message'>Hello there</p>
+        <p v-else>No</p>
+        <button @click='message=!message'>Click Me {{message}}</button>
+
+        <input type="radio" value="apple" v-model='radio_value'/>
+        <input type="radio" value="nokia" v-model='radio_value'/>
+        <input type="radio" value="samsung" v-model='radio_value'/>
+
+        Radio value is <p v-bind:radio_value='radio_value|capitalize'>{{radio_value}}</p>
+
+        <p>{{c_message}}</p>
+
+
+        First Name <input type="text" v-model='fname'>
+        Last Name <input type="text" v-model='lname'>
+
+        Full Name <input type="text" v-model='full_name'>
+
+    </div>
+
+    <script>
+        var model={
+            name:'Nahid',
+            title:'<b>Hello</b>',
+            age:25,
+            url:'https://vuejs.org/images/logo.png',
+            img_title:'image',
+            items:[
+                'first',
+                'second',
+                'third',
+                'fourth',
+                'fifth',
+                'six',
+            ],
+            students:[
+                {
+                    'name':'nahid',
+                    'age':'25',
+                    'email':'n@mail.com',
+                },
+                {
+                    'name':'hafiz',
+                    'age':'27',
+                    'email':'hafiz@mail.com',
+                },
+
+            ],
+            message:false,
+            radio_value:'',
+
+            fname:'Fname',
+            lname:'Lname',
+        }
+        var vm=new Vue({
+            el:'#app',
+            data:model,
+            methods:{
+                output:function()
+                {
+                    alert(123)
+                },
+                sayhi:function()
+                {
+                    alert('hi')
+                }
+            },
+            filters:{
+                capitalize:function(v)
+                {
+                    return v.toUpperCase()
+                }
+            },
+            computed:{
+                c_message:function()
+                {
+                    return this.radio_value.split('').reverse().join()
+                },
+
+                full_name:{
+                    get:function()
+                    {
+                        return this.fname+" "+this.lname
+                    },
+                    set:function(v)
+                    {
+                        var array=v.split(' ')
+
+                        this.fname=array[0]
+                        this.lname=array[array.length-1]
+                    }
+                }
+                
+            }
+        
+        })
+    </script>
+</body>
+
+</html>
